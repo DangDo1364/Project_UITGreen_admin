@@ -1,0 +1,68 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Category";
+    ViewData["Slug1"] = "QUẢN LÝ DANH MỤC";
+    ViewData["Slug2"] = "Quản lý danh mục";
+
+    Pager pager = new Pager();
+    int pageNo = 0;
+    if (ViewBag.Pager != null)
+    {
+        pager = ViewBag.Pager;
+        pageNo = pager.currentPage;
+    }
+}
+@model List<Category>
+<div class="table-responsive">
+    <table class="table table-bordered" style="margin-top: 20px; background-color:white; ">
+        <tr>
+            <td colspan="4">
+                <form method="get" asp-controller="category" asp-action="search">
+                    <input class="form-control"
+                           type="text"
+                           placeholder="Search"
+                           id="search" name="search"
+                           value="@ViewBag.search"
+                           style="width:100%" />
+                </form>
+
+            </td>
+            <td>
+                <a href="category/insert" class="btn btn-primary">Insert</a>
+            </td>   
+        </tr>
+        <tr>
+            <td>Mã danh mục</td>
+            <td>Tên danh mục</td>
+            <td>Mã danh mục phân cấp</td>
+            <td></td>
+            <td></td>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.id_cat</td>
+                <td>@item.name_cat</td>
+                <td>@item.id_parent</td>
+                <td>
+                    <a class="btn btn-warning" href="category/update?id=@item.id_cat">Sửa</a>
+                </td>
+                <td>
+                    <a class="btn btn-danger" href="category/delete?id=@item.id_cat" onclick="return confirm('Bạn có muốn xóa?');">Xóa</a>
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+<nav aria-label="Page navigation example" style="float: right;">
+    <ul class="pagination justify-content-center">
+        @for (var pge = pager.startPage; pge <= pager.endPage; pge++)
+        {
+            <li class="page-item @(pge==pager.currentPage ? "active" : "")">
+                <a class="page-link" asp-controller="Category" asp-action="search" asp-route-pg="@pge" asp-route-search="@ViewBag.search"> @pge</a>
+            </li>
+        }
+    </ul>
+</nav>
