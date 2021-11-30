@@ -26,7 +26,6 @@ namespace Project_UITGreen_admin.Models
                 context.SaveChanges();
             }
         }
-
         public static List<Category> SelectCat()
         {
             List<Category> listCat = new List<Category>();
