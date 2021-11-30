@@ -46,5 +46,6 @@ namespace Project_UITGreen_admin.Controllers
             return View("Index", data);
 
         }
+
     }
 }
