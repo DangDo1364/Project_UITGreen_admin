@@ -46,6 +46,33 @@ namespace Project_UITGreen_admin.Controllers
             return View("Index", data);
 
         }
+        public IActionResult InsertCat(Category cat)
+        {
+            Category.InsertCat(cat);
+            return RedirectToAction("Index");
+        }
+        public IActionResult Insert()
+        {
+            List<Category> listCat = Category.FindParent();
+            return View(listCat);
+        }
+        public IActionResult Update(int id)
+        {
+            List<Category> listCat = Category.FindParent();
+            Category cat = Category.FindCatByID(id);
+            this.ViewBag.Cat = cat;
+            return View(listCat);
+        }
+        public IActionResult UpdateCat(Category cat)
+        {
+            Category.UpdateCat(cat);
+            return RedirectToAction("Index");
+        }
+        public IActionResult Delete(int id)
+        {
+            Category.DeleteCat(id);
+            return RedirectToAction("Index");
+        }
 
     }
 }
