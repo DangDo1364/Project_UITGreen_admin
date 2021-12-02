@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "AQXX8PqhbJrtFTYvPurfnzFa3VA/M6B7TgdCJiIBEUIp3vr0cK7g8g4VP3kD8TLxvv74TKDySD4SIEOojWQRSQ==",
+  "dgSpecHash": "6WHOZqPHOLEFqNUUdrBRZkDKWveXamGr10UYYD1to2dHZjTryOs2/C5+xagnqPboqKHs/PJacK5x0f9OwPPuTg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Administrator\\Desktop\\Project\\Project_UITGreen_admin\\Project_UITGreen_admin.csproj",
+  "projectFilePath": "C:\\Users\\Administrator\\Desktop\\UIT Green\\Project_UITGreen_admin\\Project_UITGreen_admin.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Administrator\\.nuget\\packages\\google.protobuf\\3.5.1\\google.protobuf.3.5.1.nupkg.sha512",
     "C:\\Users\\Administrator\\.nuget\\packages\\microsoft.entityframeworkcore\\2.1.2\\microsoft.entityframeworkcore.2.1.2.nupkg.sha512",

@@ -5604,11 +5604,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Administrator\\Desktop\\Project\\Project_UITGreen_admin\\Project_UITGreen_admin.csproj",
+      "projectUniqueName": "C:\\Users\\Administrator\\Desktop\\UIT Green\\Project_UITGreen_admin\\Project_UITGreen_admin.csproj",
       "projectName": "Project_UITGreen_admin",
-      "projectPath": "C:\\Users\\Administrator\\Desktop\\Project\\Project_UITGreen_admin\\Project_UITGreen_admin.csproj",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\UIT Green\\Project_UITGreen_admin\\Project_UITGreen_admin.csproj",
       "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Administrator\\Desktop\\Project\\Project_UITGreen_admin\\obj\\",
+      "outputPath": "C:\\Users\\Administrator\\Desktop\\UIT Green\\Project_UITGreen_admin\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",
