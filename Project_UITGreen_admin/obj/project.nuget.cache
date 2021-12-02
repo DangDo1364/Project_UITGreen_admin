@@ -1,8 +1,14 @@
 {
   "version": 2,
+<<<<<<< HEAD
   "dgSpecHash": "DLd1muvSYzizhZlOBzYc30VrEL3pZ6U6gVDjUastjTgkKIlfZddcGcdcXiR7vzhkqNUoaHj209iUxfs0Vo4i0A==",
   "success": true,
   "projectFilePath": "C:\\Users\\dangdo1364\\Desktop\\Project_UITGreen_admin\\Project_UITGreen_admin\\Project_UITGreen_admin.csproj",
+=======
+  "dgSpecHash": "6WHOZqPHOLEFqNUUdrBRZkDKWveXamGr10UYYD1to2dHZjTryOs2/C5+xagnqPboqKHs/PJacK5x0f9OwPPuTg==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Administrator\\Desktop\\UIT Green\\Project_UITGreen_admin\\Project_UITGreen_admin.csproj",
+>>>>>>> faa34d141612702e91f1f25908055f451904c6a9
   "expectedPackageFiles": [
     "C:\\Users\\dangdo1364\\.nuget\\packages\\google.protobuf\\3.5.1\\google.protobuf.3.5.1.nupkg.sha512",
     "C:\\Users\\dangdo1364\\.nuget\\packages\\microsoft.entityframeworkcore\\2.1.2\\microsoft.entityframeworkcore.2.1.2.nupkg.sha512",

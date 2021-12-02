@@ -5604,11 +5604,19 @@
   "project": {
     "version": "1.0.0",
     "restore": {
+<<<<<<< HEAD
       "projectUniqueName": "C:\\Users\\dangdo1364\\Desktop\\Project_UITGreen_admin\\Project_UITGreen_admin\\Project_UITGreen_admin.csproj",
       "projectName": "Project_UITGreen_admin",
       "projectPath": "C:\\Users\\dangdo1364\\Desktop\\Project_UITGreen_admin\\Project_UITGreen_admin\\Project_UITGreen_admin.csproj",
       "packagesPath": "C:\\Users\\dangdo1364\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\dangdo1364\\Desktop\\Project_UITGreen_admin\\Project_UITGreen_admin\\obj\\",
+=======
+      "projectUniqueName": "C:\\Users\\Administrator\\Desktop\\UIT Green\\Project_UITGreen_admin\\Project_UITGreen_admin.csproj",
+      "projectName": "Project_UITGreen_admin",
+      "projectPath": "C:\\Users\\Administrator\\Desktop\\UIT Green\\Project_UITGreen_admin\\Project_UITGreen_admin.csproj",
+      "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Administrator\\Desktop\\UIT Green\\Project_UITGreen_admin\\obj\\",
+>>>>>>> faa34d141612702e91f1f25908055f451904c6a9
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\dangdo1364\\AppData\\Roaming\\NuGet\\NuGet.Config",
