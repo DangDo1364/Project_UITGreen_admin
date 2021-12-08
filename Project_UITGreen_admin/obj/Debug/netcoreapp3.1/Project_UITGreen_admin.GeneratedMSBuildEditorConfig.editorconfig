@@ -1,7 +1,3 @@
 is_global = true
 build_property.RootNamespace = Project_UITGreen_admin
-<<<<<<< HEAD
-build_property.ProjectDir = C:\Users\dangdo1364\Desktop\Project_UITGreen_admin\Project_UITGreen_admin\
-=======
-build_property.ProjectDir = C:\Users\Administrator\Desktop\UIT Green\Project_UITGreen_admin\
->>>>>>> faa34d141612702e91f1f25908055f451904c6a9
+build_property.ProjectDir = C:\Users\Administrator\Desktop\Project\Project_UITGreen_admin\

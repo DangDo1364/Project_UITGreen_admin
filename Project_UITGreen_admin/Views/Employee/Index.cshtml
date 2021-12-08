@@ -1,0 +1,71 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+
+    ViewData["Title"] = "Employee";
+    ViewData["Slug1"] = "QUẢN LÝ NHÂN VIÊN";
+    ViewData["Slug2"] = "Quản lý nhân viên";
+
+    List<Image> listImg = new List<Image>();
+
+    if (ViewBag.listImg != null)
+    {
+        listImg = ViewBag.listImg;
+    }
+}
+@model List<Employee>
+
+<table class="table table-bordered" style="margin-top: 20px; ">
+    <tr>
+        <td colspan="7">
+            <form method="get" asp-controller="employee" asp-action="searchemp">
+                <input class="form-control"
+                       type="text"
+                       placeholder="Search"
+                       id="search" name="search"
+                       value="@ViewBag.search"
+                       style="width:100%" />
+            </form>
+
+        </td>
+        <td>
+            <a href="Employee/Insert" class="btn btn-primary">Insert</a>
+        </td>
+    </tr>
+    <tr>
+        <td>Mã nhân viên</td>
+        <td>Tên nhân viên</td>
+        <td>Avatar</td>
+        <td>Vị trí</td>
+        <td>Số điện thoại</td>
+        <td>Email</td>
+        <td></td>
+        <td></td>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.id_emp</td>
+            <td>@item.name_emp</td>
+            @foreach (var item1 in listImg)
+            {
+                if (item.id_img == item1.id_img)
+                {
+                    <td><img src="@item1.link" style="width:100%; height:100%" /></td>
+                    break;
+                }
+            }
+            <td>@item.position</td>
+            <td>@item.phone</td>
+            <td>@item.email</td>
+            <td>
+                <a class="btn btn-warning" href="Employee/Update?id=@item.id_emp">Sửa</a>
+            </td>
+            <td>
+                <a class="btn btn-danger" href="Employee/Delete?id=@item.id_emp" onclick="return confirm('Bạn có muốn xóa?');">Xóa</a>
+            </td>
+        </tr>
+    }
+</table>
+

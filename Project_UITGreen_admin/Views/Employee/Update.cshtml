@@ -1,0 +1,61 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "UpdateEmp";
+    ViewData["Slug1"] = "QUẢN LÝ NHÂN VIÊN";
+    ViewData["Slug2"] = "Quản lý nhân viên";
+    Employee emp = new Employee();
+    if (ViewBag.emp != null)
+    {
+        emp = ViewBag.emp;
+    }
+    Image img = new Image();
+    if (ViewBag.img != null)
+    {
+        img = ViewBag.img;
+    }
+}
+<h3 style="text-align: center; margin-bottom: 10px; margin-top:20px;">Cập nhật thông tin nhân viên</h3>
+<div class="container">
+    <form action="/Employee/UpdateEmp" method="post">
+        <div class="form-group">
+            <label>Mã nhân viên:</label>
+            <input type="text" class="form-control" id="id_emp" name="id_emp" value="@emp.id_emp" readonly>
+        </div>
+        <div class=row>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>Tên nhân viên:</label>
+                    <input type="text" class="form-control" id="name_emp" name="name_emp" value="@emp.name_emp" required>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>Vị trí</label>
+                    <input type="text" class="form-control" id="position" name="position" value="@emp.position">
+                </div>
+            </div>
+        </div>
+        <div class=row>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>Số điện thoại</label>
+                    <input type="text" class="form-control" id="phone" name="phone" value="@emp.phone">
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" class="form-control" id="email" name="email" value="@emp.email">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Link ảnh sản phẩm:</label>
+            <textarea class="form-control" id="link" name="link" rows="3">@img.link</textarea>
+        </div>
+        <button type="submit" class="btn btn-success" id="submit" value="Sửa">Submit</button>
+        <a asp-action="Index" style="float:right;">Quay lại</a>
+    </form>
+</div>

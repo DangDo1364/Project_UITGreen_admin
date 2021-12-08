@@ -16,10 +16,13 @@ namespace Project_UITGreen_admin.Models
             optionsBuilder.UseMySQL(connectionString);
         }
         public DbSet<Category> Category { set; get; }
+        public DbSet<Employee> Employee { set; get; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Category>().HasKey(c => new { c.id_cat });
+            modelBuilder.Entity<Employee>().HasKey(c => new { c.id_emp });
         }
     }
 }
