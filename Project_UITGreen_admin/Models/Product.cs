@@ -19,7 +19,6 @@ namespace Project_UITGreen_admin.Models
         public double discount { set; get; }
         public double sale_rate { set; get; }
 
-        // xử lý
         public static List<Product> SelectPro()
         {
             List<Product> listPro = new List<Product>();
