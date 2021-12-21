@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Project_UITGreen_admin.Models
 {
@@ -9,7 +7,6 @@ namespace Project_UITGreen_admin.Models
     {
         public int id_pro { set; get; }
         public string name_pro { set; get; }
-        public int id_img { set; get; }
         public int id_cat { set; get; }
         public double price { set; get; }
         public int quantity { set; get; }
@@ -19,59 +16,35 @@ namespace Project_UITGreen_admin.Models
         public double discount { set; get; }
         public double sale_rate { set; get; }
 
+        // xử lý
         public static List<Product> SelectPro()
         {
             List<Product> listPro = new List<Product>();
             using (var context = new DataContext())
             {
-                var product = context.Product.ToList();
-                foreach (var pro in product)
-                {
-                    listPro.Add(new Product()
-                    {
-                        id_pro = pro.id_pro,
-                        name_pro = pro.name_pro,
-                        id_img = pro.id_img,
-                        id_cat = pro.id_cat,
-                        price = pro.price,
-                        quantity = pro.quantity,
-                        origin = pro.origin,
-                        status = pro.status,
-                        type = pro.type,
-                        discount = pro.discount,
-                        sale_rate = pro.sale_rate
-                    });
-                }
+                listPro = context.Product.ToList();
             }
             return listPro;
+        }
+        public static Product SelectProNew()
+        {
+            Product Pro = new Product();
+            using (var context = new DataContext())
+            {
+                Pro = context.Product.ToList().Last();
+            }
+            return Pro;
         }
         public static List<Product> SearchPro(string search)
         {
             List<Product> listPro = new List<Product>();
             using (var context = new DataContext())
             {
-                var product = context.Product.Where(p => p.name_pro.Contains(search)).ToList();
-                foreach (var pro in product)
-                {
-                    listPro.Add(new Product()
-                    {
-                        id_pro = pro.id_pro,
-                        name_pro = pro.name_pro,
-                        id_img = pro.id_img,
-                        id_cat = pro.id_cat,
-                        price = pro.price,
-                        quantity = pro.quantity,
-                        origin = pro.origin,
-                        status = pro.status,
-                        type = pro.type,
-                        discount = pro.discount,
-                        sale_rate = pro.sale_rate
-                    });
-                }
+                listPro = context.Product.Where(p => p.name_pro.Contains(search)).ToList();
             }
             return listPro;
         }
-        public static void InsertPro(Product pro, int id_img1)
+        public static void InsertPro(Product pro)
         {
             using (var context = new DataContext())
             {
@@ -79,7 +52,6 @@ namespace Project_UITGreen_admin.Models
                 {
                     id_pro = pro.id_pro,
                     name_pro = pro.name_pro,
-                    id_img = id_img1,
                     id_cat = pro.id_cat,
                     price = pro.price,
                     quantity = pro.quantity,
@@ -92,7 +64,7 @@ namespace Project_UITGreen_admin.Models
                 context.SaveChanges();
             }
         }
-        public static void UpdatePro(Product pro, string link1)
+        public static void UpdatePro(Product pro)
         {
             using (var context = new DataContext())
             {
@@ -100,16 +72,12 @@ namespace Project_UITGreen_admin.Models
                 Product pro_duct = (from p in product
                                     where (p.id_pro == pro.id_pro)
                                     select p).FirstOrDefault();
-                Image img = new Image();
-                img.id_img = pro_duct.id_img;
-                img.link = link1;
-                Image.UpdateImg(img);
+            
                 if (pro_duct != null)
                 {
                     pro_duct.name_pro = pro.name_pro;
                     pro_duct.id_cat = pro.id_cat;
                     pro_duct.price = pro.price;
-                    pro_duct.quantity = pro.quantity;
                     pro_duct.origin = pro.origin;
                     pro_duct.status = pro.status;
                     pro_duct.type = pro.type;
@@ -120,7 +88,7 @@ namespace Project_UITGreen_admin.Models
 
             }
         }
-        public static void UpdateImp(int id, int sl, double price)
+        public static void UpdateImp(int id, int sl ,double price)
         {
             using (var context = new DataContext())
             {
@@ -132,6 +100,21 @@ namespace Project_UITGreen_admin.Models
                 {
                     pro_duct.price = price;
                     pro_duct.quantity = pro_duct.quantity + sl;
+                }
+                context.SaveChanges();
+            }
+        }
+        public static void UpdateExp(int id, int sl)
+        {
+            using (var context = new DataContext())
+            {
+                var product = context.Product;
+                Product pro_duct = (from p in product
+                                    where (p.id_pro == id)
+                                    select p).FirstOrDefault();
+                if (pro_duct != null)
+                {
+                    pro_duct.quantity = pro_duct.quantity - sl;
                 }
                 context.SaveChanges();
             }
