@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace UITGreen247_project.Models
+namespace Project_UITGreen_admin.Models
 {
     public class Users
     {
