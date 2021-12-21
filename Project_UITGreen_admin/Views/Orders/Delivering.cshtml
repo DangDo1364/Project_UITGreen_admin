@@ -1,0 +1,58 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Orders";
+    ViewData["Slug1"] = "QUẢN LÝ ĐƠN HÀNG";
+    ViewData["Slug2"] = "Quản lý đơn hàng khách hàng";
+
+    Pager pager = new Pager();
+    int pageNo = 0;
+    if (ViewBag.Pager != null)
+    {
+        pager = ViewBag.Pager;
+        pageNo = pager.currentPage;
+    }
+    List<Orders> list = ViewBag.listord;
+}
+<style>
+    td {
+        text-align: center;
+    }
+</style>
+<nav class="nav nav-pills nav-fill">
+    <a class="nav-item nav-link" asp-controller="orders" asp-action="received">Đơn đã tiếp nhận</a>
+    <a class="nav-item nav-link" asp-controller="orders" asp-action="confirmed">Đơn đã xác nhận</a>
+    <a class="nav-item nav-link active" asp-controller="orders" asp-action="delivering">Đang vận chuyển</a>
+    <a class="nav-item nav-link" asp-controller="orders" asp-action="accomplished">Đơn đã hoàn thành</a>
+    <a class="nav-item nav-link" asp-controller="orders" asp-action="cancelled">Đơn đã hủy</a>
+</nav>
+<table class="table" style="margin-top: 20px; background-color: white; ">
+    <tr>
+        <td>Mã đơn hàng</td>
+        <td>Mã khách hàng</td>
+        <td>Tổng giá tiền</td>
+        <td></td>
+        <td></td>
+    </tr>
+    @foreach (var item in list)
+    {
+        <tr>
+            <td>@item.id_ord</td>
+            <td>@item.id_customer</td>
+            <td>@String.Format("{0:0,0}", item.price_sum)</td>
+            <td><a class="btn btn-primary" asp-controller="orders" asp-action="accomplish" asp-route-id="@item.id_ord">Hoàn thành đơn hàng</a></td>
+            <td><a class="btn btn-success" asp-controller="orders" asp-action="detail_ord" asp-route-id="@item.id_ord">Chi tiết</a></td>
+        </tr>
+    }
+</table>
+<nav aria-label="Page navigation example" style="float: right;">
+    <ul class="pagination justify-content-center">
+        @for (var pge = pager.startPage; pge <= pager.endPage; pge++)
+        {
+            <li class="page-item @(pge==pager.currentPage ? "active" : "")">
+                <a class="page-link" asp-controller="orders" asp-action="delivering" asp-route-pg="@pge">@pge</a>
+            </li>
+        }
+    </ul>
+</nav>

@@ -1,0 +1,78 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Orders ord = ViewBag.ord;
+    List<Order_items> list = ViewBag.listord;
+    Customer cus = Customer.SelectByID(ord.id_customer);
+    Promotion promo = Promotion.selectbyid(ord.id_promotion);
+ 
+}
+
+<h3 style="text-align: center; margin-bottom: 10px; margin-top:20px;">Chi tiết đơn hàng</h3>
+<div class="container">
+    <div class=row>
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label>Tên khách hàng:</label>
+                <input type="text" class="form-control" value="@cus.name_cus">
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label>Email khách hàng</label>
+                <input type="text" class="form-control" value="@cus.email">
+            </div>
+        </div>
+    </div>
+    <div class=row>
+        <div class="col-sm-4">
+            <div class="form-group">
+                <label>Số điện thoại</label>
+                <input type="text" class="form-control" value="@cus.phone">
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group">
+                <label>Tiền ship</label>
+                <input type="text" class="form-control" value="@ord.ship">
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group">
+                <label>Mã giảm giá áp dụng</label>
+                <input type="text" class="form-control" value="@promo.name_promotion - @String.Format("{0:0,0}", promo.discount)">
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Địa chỉ đơn hàng:</label>
+        <input type="text" class="form-control" value="@cus.address">
+    </div>
+    <div class="form-group">
+        <label>Lưu ý đơn hàng:</label>
+        <textarea class="form-control" id="status" name="status" rows="5">@ord.note</textarea>
+    </div>
+    <div class="form-group">
+        <label>Sản phẩm đặt hàng:</label>
+        <table class="table" style="margin-top: 20px; background-color: white; ">
+            <tr>
+                <td>Tên sản phẩm</td>
+                <td>ĐVT</td>
+                <td>Số lượng</td>
+                <td>Giá tiền</td>
+            </tr>
+            @foreach (var item in list)
+            {
+                Product pro = Product.FindProByID(item.id_pro);
+                <tr>
+                    <td>@pro.name_pro</td>
+                    <td>@pro.type</td>
+                    <td>@item.quantity</td>
+                    <td>@String.Format("{0:0,0}", item.price)</td>                
+                </tr>
+            }
+        </table>
+    </div>
+    <a asp-controller="orders" asp-action="received" style="float:right; text-decoration:none;">Quay lại</a>
+</div>

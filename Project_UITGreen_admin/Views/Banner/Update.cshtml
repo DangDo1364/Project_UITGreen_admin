@@ -1,0 +1,27 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "UpdateEmp";
+    ViewData["Slug1"] = "QUẢN LÝ BANNER";
+    ViewData["Slug2"] = "Quản lý nhân viên";
+}
+@model Banner  
+<h3 style="text-align: center; margin-bottom: 10px; margin-top:20px;">Cập nhật thông tin nhân viên</h3>
+<div class="container">
+    <form action="/Employee/UpdateEmp" method="post">
+        <div class="form-group">
+            <label>Loại banner:</label>
+            <input type="text" class="form-control" name="id_banner" value="@Model.description" required>
+        </div>
+        @{
+            Image img = Image.SelectOne(Model.id_img);
+        }
+        <div class="form-group">
+            <label>Link ảnh Banner:</label>
+            <textarea class="form-control" id="link" name="link" rows="3">@img.link</textarea>
+        </div>
+        <button type="submit" class="btn btn-success" id="submit" value="Sửa">Submit</button>
+        <a asp-action="Index" style="float:right;">Quay lại</a>
+    </form>
+</div>
