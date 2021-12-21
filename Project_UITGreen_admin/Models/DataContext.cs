@@ -18,6 +18,8 @@ namespace Project_UITGreen_admin.Models
         public DbSet<Category> Category { set; get; }
         public DbSet<Employee> Employee { set; get; }
         public DbSet<Comment> Comment { set; get; }
+        public DbSet<Promotion> Promotion { set; get; }
+        public DbSet<Image> Image { set; get; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -25,6 +27,8 @@ namespace Project_UITGreen_admin.Models
             modelBuilder.Entity<Category>().HasKey(c => new { c.id_cat });
             modelBuilder.Entity<Employee>().HasKey(c => new { c.id_emp });
             modelBuilder.Entity<Comment>().HasKey(c => new { c.id_cmt });
+            modelBuilder.Entity<Promotion>().HasKey(c => new { c.id_promotion });
+            modelBuilder.Entity<Image>().HasKey(c => new { c.id_img });
         }
     }
 }

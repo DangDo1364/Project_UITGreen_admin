@@ -1,0 +1,37 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "InsertPromotion";
+    ViewData["Slug1"] = "QL MÃ GIẢM GIÁ";
+    ViewData["Slug2"] = "Quản lý mã giảm giá";
+    Promotion pro = ViewBag.pro;
+}
+<h3 style="text-align: center; margin-bottom: 10px; margin-top:20px;">Cập nhật mã giảm giá</h3>
+<div class="container">
+    <form asp-action="updatepro" asp-controller="promotion" method="post">
+        <input type="text" class="form-control" name="id_promotion" value="@pro.id_promotion" style="display:none;" required>
+        <div class=row>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>Tên mã giảm giá:</label>
+                    <input type="text" class="form-control" name="name_promotion" value="@pro.name_promotion" required>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>Vị trí</label>
+                    <input type="text" class="form-control" name="discount" value="@pro.discount" required>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Ngày hết hạn:</label>
+            <input type="datetime-local" name="date"
+                   value="@pro.date.ToString(" yyyy-MM-dd HH:mm:ss").Replace(' ',' T')">
+        </div>
+        <button type="submit" class="btn btn-success" id="submit" value="Thêm">Submit</button>
+        <a asp-action="index" style="float:right;">Quay lại</a>
+    </form>
+</div>
+

@@ -1,0 +1,148 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - LoginFormDemo</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
+          integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <style>
+        a.navbar-brand {
+            white-space: normal;
+            text-align: center;
+            word-break: break-all;
+        }
+
+        /* Provide sufficient contrast against white background */
+        a {
+            color: #0366d6;
+        }
+
+        .btn-primary {
+            color: #fff;
+            background-color: #1b6ec2;
+            border-color: #1861ac;
+        }
+
+        .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+            color: #fff;
+            background-color: #1b6ec2;
+            border-color: #1861ac;
+        }
+
+        html {
+            font-size: 14px;
+        }
+
+        .border-md {
+            border-width: 2px;
+        }
+
+        .btn-facebook {
+            background: #405D9D;
+            border: none;
+        }
+
+            .btn-facebook:hover,
+            .btn-facebook:focus {
+                background: #314879;
+            }
+
+        .btn-twitter {
+            background: #42AEEC;
+            border: none;
+        }
+
+            .btn-twitter:hover,
+            .btn-twitter:focus {
+                background: #1799e4;
+            }
+
+        body {
+            min-height: 100vh;
+        }
+
+        .form-control:not(select) {
+            padding: 1.5rem 0.5rem;
+        }
+
+        select.form-control {
+            height: 52px;
+            padding-left: 0.5rem;
+        }
+
+        .form-control::placeholder {
+            color: #ccc;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .form-control:focus {
+            box-shadow: none;
+        }
+
+        h1 {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <main role="main" class="pb-3">
+            <form method="post" asp-controller="home" asp-action="checklogin">
+                <div class="container">
+                    <div class="row py-5 mt-4 align-items-center">
+                        <!-- For Demo Purpose -->
+                        <div class="col-md-5 pr-lg-5 mb-5 mb-md-0">
+                            <img src="https://bootstrapious.com/i/snippets/sn-registeration/illustration.svg" alt=""
+                                 class="img-fluid mb-3 d-none d-md-block">
+                            <h1 style="text-align: center;">Login</h1>
+                        </div>
+                        <!-- Registeration Form -->
+                        <div class="col-md-7 col-lg-6 ml-auto">
+                            <div class="row">
+                                <!-- Email Address -->
+                                <div class="input-group col-lg-12 mb-4">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text bg-white px-4 border-md border-right-0">
+                                            <i class="fa fa-envelope text-muted"></i>
+                                        </span>
+                                    </div>
+                                    <input type="text" name="account" placeholder="Account"
+                                           class="form-control bg-white border-left-0 border-md" required>
+                                </div>
+                                <div class="input-group col-lg-12 mb-4">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text bg-white px-4 border-md border-right-0">
+                                            <i class="fa fa-lock text-muted"></i>
+                                        </span>
+                                    </div>
+                                    <input id="password" type="password" name="password" placeholder="Password"
+                                           class="form-control bg-white border-left-0 border-md" required>
+                                </div>.
+                                <!-- Submit Button -->
+                                <div class="form-group col-lg-12 mx-auto mb-0">
+                                    <button class="btn btn-primary btn-block py-2" type="submit" value="Login">Login</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </main>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Promotion";
+    ViewData["Slug1"] = "QL MÃ GIẢM GIÁ";
+    ViewData["Slug2"] = "Quản lý mã giảm giá";
+    List<Promotion> list = ViewBag.list;
+}
+<style>
+    td {
+        text-align: center;
+    }
+</style>
+<div class="table-responsive" id="category">
+    <table class="table" style="margin-top: 20px; background-color:white; ">
+        <tr>
+            <td colspan="3"></td>
+            <td><a asp-controller="promotion" asp-action="insert" class="btn btn-primary">Tạo mới</a></td>
+        </tr>
+        <tr>
+            <td>Tên mã giảm giá</td>
+            <td>Giảm giá</td>
+            <td>Ngày hết hạn</td>
+            <td></td>
+        </tr>
+        @foreach (var item in list)
+        {
+            <tr>
+                <td>@item.name_promotion</td>
+                <td>@item.discount</td>
+                <td>@item.date</td>
+                <td>
+                    <a class="btn btn-warning" asp-controller="promotion" asp-action="update" asp-route-id="@item.id_promotion">Cập nhật</a>
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+
