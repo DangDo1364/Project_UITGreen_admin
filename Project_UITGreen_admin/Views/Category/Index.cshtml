@@ -13,44 +13,56 @@
         pager = ViewBag.Pager;
         pageNo = pager.currentPage;
     }
+    List<Category> listcat = Category.FindParent();
 }
+<style>
+    td {
+        text-align: center;
+    }
+</style>
 @model List<Category>
-<div class="table-responsive">
-    <table class="table table-bordered" style="margin-top: 20px; background-color:white; ">
+<div class="table-responsive" id="category">
+    <table class="table" style="margin-top: 20px; background-color:white; ">
         <tr>
-            <td colspan="4">
+            <td colspan="2">
                 <form method="get" asp-controller="category" asp-action="search">
-                    <input class="form-control"
-                           type="text"
-                           placeholder="Search"
-                           id="search" name="search"
-                           value="@ViewBag.search"
-                           style="width:100%" />
+                    <div class="input-group">
+                        <select class="form-control" id="id_parent" name="search" style="width:80%;">
+                            <option value="0">Vui lòng chọn</option>
+                            @foreach (var item in listcat)
+                            {
+                                if (item.id_cat == ViewBag.search)
+                                {
+                                    <option value="@item.id_cat" selected="selected">@item.name_cat</option>
+                                }
+                                else
+                                {
+                                    <option value="@item.id_cat">@item.name_cat</option>
+                                }
+                            }
+                        </select>
+                        <button type="submit" class="btn btn-primary" style="margin-left: 20px"><i class="fa fa-search"></i></button>
+                    </div>
                 </form>
-
             </td>
+
             <td>
-                <a href="category/insert" class="btn btn-primary">Insert</a>
-            </td>   
+                <a asp-controller="category" asp-action="insert" class="btn btn-primary">Tạo mới</a>
+            </td>
         </tr>
         <tr>
-            <td>Mã danh mục</td>
             <td>Tên danh mục</td>
             <td>Mã danh mục phân cấp</td>
-            <td></td>
             <td></td>
         </tr>
         @foreach (var item in Model)
         {
+            Category cat = Category.FindCatByID(item.id_parent);
             <tr>
-                <td>@item.id_cat</td>
                 <td>@item.name_cat</td>
-                <td>@item.id_parent</td>
+                <td>@cat.name_cat</td>
                 <td>
-                    <a class="btn btn-warning" href="category/update?id=@item.id_cat">Sửa</a>
-                </td>
-                <td>
-                    <a class="btn btn-danger" href="category/delete?id=@item.id_cat" onclick="return confirm('Bạn có muốn xóa?');">Xóa</a>
+                    <a class="btn btn-warning" asp-controller="category" asp-action="update" asp-route-id="@item.id_cat">Cập nhật</a>
                 </td>
             </tr>
         }
@@ -61,7 +73,7 @@
         @for (var pge = pager.startPage; pge <= pager.endPage; pge++)
         {
             <li class="page-item @(pge==pager.currentPage ? "active" : "")">
-                <a class="page-link" asp-controller="Category" asp-action="search" asp-route-pg="@pge" asp-route-search="@ViewBag.search"> @pge</a>
+                <a class="page-link" asp-controller="category" asp-action="search" asp-route-pg="@pge" asp-route-search="@ViewBag.search">@pge</a>
             </li>
         }
     </ul>

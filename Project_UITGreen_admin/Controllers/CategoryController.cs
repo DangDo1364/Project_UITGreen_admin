@@ -9,8 +9,6 @@ namespace Project_UITGreen_admin.Controllers
 {
     public class CategoryController : Controller
     {
-        private DataContext data = new DataContext();
-
         public IActionResult Index(int pg = 1)
         {
             const int pageSize = 5;
@@ -18,33 +16,30 @@ namespace Project_UITGreen_admin.Controllers
             {
                 pg = 1;
             }
-            int recsCount = Category.SelectCat().Count();
+            int recsCount = Category.FindCatChild().Count();
             var pager = new Pager(recsCount, pg, pageSize);
             int recSkip = (pg - 1) * pageSize;
-            var data = Category.SelectCat().Skip(recSkip).Take(pager.pageSize).ToList();
+            var data = Category.FindCatChild().Skip(recSkip).Take(pager.pageSize).ToList();
             this.ViewBag.Pager = pager;
 
             return View(data);
         }
-        [HttpGet]
-        [Route("search")]
-        public IActionResult Search(int pg = 1)
+
+        public IActionResult Search(int search, int pg = 1)
         {
-            string search = Request.Query["search"].ToString();
             const int pageSize = 5;
             if (pg < 1)
             {
                 pg = 1;
             }
-            int recsCount = Category.SearchCat(search).Count();
+            int recsCount = Category.FindCatChildByIDParent(search).Count();
             var pager = new Pager(recsCount, pg, pageSize);
             int recSkip = (pg - 1) * pageSize;
-            var data = Category.SearchCat(search).Skip(recSkip).Take(pager.pageSize).ToList();
+            var data = Category.FindCatChildByIDParent(search).Skip(recSkip).Take(pager.pageSize).ToList();
             this.ViewBag.Pager = pager;
             this.ViewBag.search = search;
 
             return View("Index", data);
-
         }
         public IActionResult InsertCat(Category cat)
         {
@@ -73,6 +68,5 @@ namespace Project_UITGreen_admin.Controllers
             Category.DeleteCat(id);
             return RedirectToAction("Index");
         }
-
     }
 }

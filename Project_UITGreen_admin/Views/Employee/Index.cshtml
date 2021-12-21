@@ -14,58 +14,96 @@
         listImg = ViewBag.listImg;
     }
 }
+}
 @model List<Employee>
 
-<table class="table table-bordered" style="margin-top: 20px; ">
-    <tr>
-        <td colspan="7">
-            <form method="get" asp-controller="employee" asp-action="searchemp">
-                <input class="form-control"
-                       type="text"
-                       placeholder="Search"
-                       id="search" name="search"
-                       value="@ViewBag.search"
-                       style="width:100%" />
-            </form>
-
-        </td>
-        <td>
-            <a href="Employee/Insert" class="btn btn-primary">Insert</a>
-        </td>
-    </tr>
-    <tr>
-        <td>Mã nhân viên</td>
-        <td>Tên nhân viên</td>
-        <td>Avatar</td>
-        <td>Vị trí</td>
-        <td>Số điện thoại</td>
-        <td>Email</td>
-        <td></td>
-        <td></td>
-    </tr>
-    @foreach (var item in Model)
-    {
+<style>
+    td {
+        text-align: center;
+    }
+</style>
+<div class="table-responsive" id="employee">
+    <table class="table" style="margin-top: 20px; background-color: white;">
         <tr>
-            <td>@item.id_emp</td>
-            <td>@item.name_emp</td>
-            @foreach (var item1 in listImg)
-            {
-                if (item.id_img == item1.id_img)
-                {
-                    <td><img src="@item1.link" style="width:100%; height:100%" /></td>
-                    break;
-                }
-            }
-            <td>@item.position</td>
-            <td>@item.phone</td>
-            <td>@item.email</td>
-            <td>
-                <a class="btn btn-warning" href="Employee/Update?id=@item.id_emp">Sửa</a>
+            <td colspan="7">
             </td>
             <td>
-                <a class="btn btn-danger" href="Employee/Delete?id=@item.id_emp" onclick="return confirm('Bạn có muốn xóa?');">Xóa</a>
+                <a asp-controller="employee" asp-action="insert" class="btn btn-primary">Tạo mới</a>
             </td>
         </tr>
-    }
-</table>
+        <tr>
+            <td>Mã nhân viên</td>
+            <td>Tên nhân viên</td>
+            <td>Avatar</td>
+            <td>Vị trí</td>
+            <td>Số điện thoại</td>
+            <td>Email</td>
+            <td></td>
+            <td></td>
+        </tr>
+        @foreach (var item in Model)
+        {
+            Image img = Image.SelectOne(item.id_img);
+            <tr>
+                <td>@item.id_emp</td>
+                <td>@item.name_emp</td>
+                <td><img src="@img.link" style="width:100px; height:100px" /></td>
+                <td>@item.position</td>
+                <td>@item.phone</td>
+                <td>@item.email</td>
+                <td>
+                    <a class="btn btn-warning" asp-controller="employee" asp-action="update" asp-route-id="@item.id_emp">Sửa</a>
+                </td>
+                <td>
+                    <a class="delete btn btn-danger" data-id="@item.id_emp">Xóa</a>
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+@section scripts{
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script>
+        $(document).ready(function () {
+            $(".delete").click(function () {
+                Swal.fire({
+                    title: 'Bạn có chắc muốn xóa không?',
+                    showDenyButton: true,
+                    confirmButtonText: 'Save',
+                    denyButtonText: `Don't save`,
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: "/Employee/Delete",
+                            data: {
+                                id: $(this).data("id"),
+                            },
+                            success: function (data) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Xóa nhân viên thành công',
+                                    showConfirmButton: false,
+                                    timer: 1300
+                                });
+                                $("#employee").load(location.href + " #employee>*", "");
+                            },
+                            error: function () {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Xóa danh mục thất bại',
+                                    text: 'Vui lòng thử lại',
+                                    showConfirmButton: false,
+                                    timer: 1300
+                                });
+                            }
+                        });
+                    } else if (result.isDenied) {
+                        Swal.fire('Thao tác không được lưu lại', '', 'info')
+                    }
+                })
+            });
+        });
+    </script>
+}
+
 

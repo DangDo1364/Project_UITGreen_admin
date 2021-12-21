@@ -108,6 +108,22 @@ namespace Project_UITGreen_admin.Models
                 return cate;
             }
         }
+        public static List<Category> FindCatChildByIDParent(int id)
+        {
+            using (var context = new DataContext())
+            {
+                List<Category> cat = new List<Category>();
+                if (id != 0)
+                {
+                    cat = context.Category.Where(p => p.id_parent == id).ToList();
+                }
+                else
+                {
+                    cat = context.Category.Where(p => p.id_parent > 0).ToList();
+                }
+                return cat;
+            }
+        }
         public static List<Category> FindCatChild()
         {
             List<Category> listCat = new List<Category>();
@@ -141,5 +157,7 @@ namespace Project_UITGreen_admin.Models
             }
             return listCat;
         }
+
     }
+
 }
