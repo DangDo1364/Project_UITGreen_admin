@@ -1,24 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Project_UITGreen_admin.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using Project_UITGreen_admin.Models;
 
 namespace Project_UITGreen_admin.Controllers
 {
     public class ProductController : Controller
     {
-        public IActionResult Index(int pg = 1)
+        public IActionResult Index(int pg=1)
         {
             List<Product> listPro = new List<Product>();
             listPro = Product.SelectPro();
-            List<Image> listImg = new List<Image>();
-            foreach (var item in listPro)
-            {
-                listImg.Add(Image.SelectOne(item.id_img));
-            }
-            this.ViewBag.listImg = listImg;
             List<Category> listCat = new List<Category>();
             foreach (var item1 in listPro)
             {
@@ -34,7 +26,7 @@ namespace Project_UITGreen_admin.Controllers
             int recsCount = listPro.Count();
             var pager = new Pager(recsCount, pg, pageSize);
             int recSkip = (pg - 1) * pageSize;
-            var data = listPro.Skip(recSkip).Take(pager.pageSize).ToList();
+            var data = listPro.OrderByDescending(p => p.id_pro).Skip(recSkip).Take(pager.pageSize).ToList();
             this.ViewBag.Pager = pager;
             return View(data);
         }
@@ -45,12 +37,6 @@ namespace Project_UITGreen_admin.Controllers
             string search = Request.Query["search"].ToString();
             List<Product> listPro = new List<Product>();
             listPro = Product.SearchPro(search);
-            List<Image> listImg = new List<Image>();
-            foreach (var item in listPro)
-            {
-                listImg.Add(Image.SelectOne(item.id_img));
-            }
-            this.ViewBag.listImg = listImg;
             List<Category> listCat = new List<Category>();
             foreach (var item1 in listPro)
             {
@@ -66,16 +52,15 @@ namespace Project_UITGreen_admin.Controllers
             int recsCount = listPro.Count();
             var pager = new Pager(recsCount, pg, pageSize);
             int recSkip = (pg - 1) * pageSize;
-            var data = listPro.Skip(recSkip).Take(pager.pageSize).ToList();
+            var data = listPro.OrderByDescending(p => p.id_pro).Skip(recSkip).Take(pager.pageSize).ToList();
             this.ViewBag.Pager = pager;
             this.ViewBag.search = search;
-            return View("Index", data);
+            return View("Index",data);
         }
         public IActionResult Insert()
         {
             List<Category> listCat = new List<Category>();
             listCat = Category.FindCatChild();
-
             return View(listCat);
         }
         public IActionResult Update(int id)
@@ -84,28 +69,36 @@ namespace Project_UITGreen_admin.Controllers
             listCat = Category.FindCatChild();
             Product pro = Product.FindProByID(id);
             this.ViewBag.pro = pro;
-            Image img = Image.SelectOne(pro.id_img);
-            this.ViewBag.img = img;
+            List <Image_product> listimg = new List<Image_product>();
+            listimg = Image_product.FindImgByIDPro(id);
+            this.ViewBag.listimg = listimg;
             return View(listCat);
         }
-        public IActionResult UpdatePro(Product pro, string link)
+        public IActionResult UpdatePro(Product pro, int id1, int id2, int id3, int id4, int id5, string link1, string link2, string link3, string link4, string link5)
         {
-            Product.UpdatePro(pro, link);
+            Product.UpdatePro(pro);
+            Image_product.UpdateImg(id1, link1);
+            Image_product.UpdateImg(id2, link2);
+            Image_product.UpdateImg(id3, link3);
+            Image_product.UpdateImg(id4, link4);
+            Image_product.UpdateImg(id5, link5);
             return RedirectToAction("Index");
         }
-        public IActionResult InsertPro(Image img, Product pro)
+        public IActionResult InsertPro(Product pro, string link1, string link2, string link3, string link4, string link5)
         {
-            Image.InsertImg(img);
-            Image image = Image.SelectNew();
-            Product.InsertPro(pro, image.id_img);
+            Product.InsertPro(pro);
+            int id = Product.SelectProNew().id_pro;
+            Image_product.InsertImg(id, link1);
+            Image_product.InsertImg(id, link2);
+            Image_product.InsertImg(id, link3);
+            Image_product.InsertImg(id, link4);
+            Image_product.InsertImg(id, link5);
             return RedirectToAction("Index");
         }
         public IActionResult Delete(int id)
         {
-            Product pro = Product.FindProByID(id);
-            int id_img = pro.id_img;
+            Image_product.DeleteImg(id);
             Product.DeletePro(id);
-            Image.DeleteImg(id_img);
             return RedirectToAction("Index");
         }
     }
