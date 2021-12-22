@@ -1,0 +1,19 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Statistical";
+    ViewData["Slug1"] = "THỐNG KÊ";
+    ViewData["Slug2"] = "Thống kê";
+}
+
+<form asp-controller="statistical" asp-action="export" method="post">
+    <div class="input-group" style="margin-bottom:50px;">
+        <label>Chọn ngày xuất hóa đơn:</label>
+        <input type="date" name="date"
+               value="">
+        <button type="submit" class="statistical btn btn-success" id="submit" value="Thêm">Submit</button>
+    </div>
+</form>
+<a class="btn btn-success" asp-controller="statistical" asp-action="product_quantity">Sản phẩm có số lượng mua nhiều nhất</a>
+<a class="btn btn-success" asp-controller="statistical" asp-action="top_customer">Khách hàng thành viên mua nhiều nhất</a>

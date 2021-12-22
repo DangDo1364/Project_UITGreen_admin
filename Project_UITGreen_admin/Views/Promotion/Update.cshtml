@@ -28,7 +28,7 @@
         <div class="form-group">
             <label>Ngày hết hạn:</label>
             <input type="datetime-local" name="date"
-                   value="@pro.date.ToString(" yyyy-MM-dd HH:mm:ss").Replace(' ',' T')">
+                   value="@pro.date.ToString("yyyy-MM-dd HH:mm:ss").Replace(' ','T')">
         </div>
         <button type="submit" class="btn btn-success" id="submit" value="Thêm">Submit</button>
         <a asp-action="index" style="float:right;">Quay lại</a>

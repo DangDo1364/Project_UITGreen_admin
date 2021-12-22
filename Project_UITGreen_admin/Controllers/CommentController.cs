@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Project_UITGreen_admin.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,10 +39,10 @@ namespace Project_UITGreen_admin.Controllers
 
             return View("index", data);
         }
-        public IActionResult Delete(int id)
+        public IActionResult Delete(int id, string type = "Normal")
         {
-
-            return View();
+            Comment.DeleteCmt(id);
+            return RedirectToAction("Index");
         }
     }
 }

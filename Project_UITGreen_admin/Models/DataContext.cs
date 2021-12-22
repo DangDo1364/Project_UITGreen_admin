@@ -9,7 +9,7 @@ namespace Project_UITGreen_admin.Models
     public class DataContext : DbContext
     {
         private const string connectionString
-     = "server=localhost;port=3306;database=quanlysieuthi;uid=root;password=";
+      = "server=localhost;port=3306;database=quanlysieuthi;uid=root;password=";
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
@@ -26,12 +26,13 @@ namespace Project_UITGreen_admin.Models
         public DbSet<Order_items> Order_items { set; get; }
         public DbSet<Order_user_items> Order_user_items { set; get; }
         public DbSet<Order_status> Order_status { set; get; }
-        //public DbSet<Storage_import> Storage_import { set; get; }
-        //public DbSet<Storage_export> Storage_export { set; get; }
-        //public DbSet<Customer> Customer { set; get; }
+        public DbSet<Storage_import> Storage_import { set; get; }
+        public DbSet<Storage_export> Storage_export { set; get; }
+        public DbSet<Customer> Customer { set; get; }
         public DbSet<Users> Users { set; get; }
         public DbSet<Banner> Banner { set; get; }
         public DbSet<Promotion> Promotion { set; get; }
+        public DbSet<Sub_news> Sub_news { set; get; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Category>().HasKey(c => new { c.id_cat });
@@ -45,13 +46,14 @@ namespace Project_UITGreen_admin.Models
             modelBuilder.Entity<Order_items>().HasKey(c => new { c.id_ord });
             modelBuilder.Entity<Order_items>().HasKey(c => new { c.id_pro });
             modelBuilder.Entity<Order_user_items>().HasKey(c => new { c.id_user_items });
-            //modelBuilder.Entity<Storage_import>().HasKey(c => new { c.id_imp });
-            //modelBuilder.Entity<Storage_export>().HasKey(c => new { c.id_exp });
-            //modelBuilder.Entity<Customer>().HasKey(c => new { c.id_cus });
+            modelBuilder.Entity<Storage_import>().HasKey(c => new { c.id_imp });
+            modelBuilder.Entity<Storage_export>().HasKey(c => new { c.id_exp });
+            modelBuilder.Entity<Customer>().HasKey(c => new { c.id_cus });
             modelBuilder.Entity<Users>().HasKey(c => new { c.id });
             modelBuilder.Entity<Banner>().HasKey(c => new { c.id_banner });
             modelBuilder.Entity<Order_status>().HasKey(c => new { c.id });
             modelBuilder.Entity<Promotion>().HasKey(c => new { c.id_promotion });
+            modelBuilder.Entity<Sub_news>().HasKey(c => new { c.id_sub });
         }
     }
 

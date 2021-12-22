@@ -3,43 +3,143 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Project_UITGreen_admin</title>
+    <title>@ViewData["Title"]</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/style.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+    <style>
+    </style>
+    <script>
+        $(function () {
+            // Sidebar toggle behavior
+            $('#sidebarCollapse').on('click', function () {
+                $('#sidebar, #content').toggleClass('active');
+            });
+        });
+        $(function () {
+            // Sidebar toggle behavior
+            document.getElementById("sidebarCollapse").onmouseover = function () {
+                $('#sidebar, #content').toggleClass('active');
+            };
+        });
+
+    </script>
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Project_UITGreen_admin</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
+    <div class="vertical-nav bg-white" id="sidebar" style="overflow: scroll">
+        <div class="py-4 px-3 mb-4 bg-light">
+            <div class="media d-flex align-items-center">
+                <div class="media-body">
+                    <h6><i class="fas fa-cog"></i> @ViewData["Slug1"]</h6>
                 </div>
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
-
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2021 - Project_UITGreen_admin - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
-    </footer>
+
+        <p class="text-gray font-weight-bold text-uppercase px-3 small pb-4 mb-0">BẢNG ĐIỀU KHIỂN</p>
+        <ul class="nav flex-column bg-white mb-0">
+            <li class="nav-item">
+                <a asp-controller="category" asp-action="index" class="nav-link text-dark font-italic bg-light">
+                    <i class="fas fa-tasks"></i>
+                    Quản lý danh mục
+                </a>
+            </li>
+            <li class="nav-item">
+                <a asp-controller="product" asp-action="index" class="nav-link text-dark font-italic bg-light">
+                    <i class="fas fa-carrot"></i>
+                    Quản lý sản phẩm
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="/orders/received" class="nav-link text-dark font-italic bg-light">
+                    <i class="fas fa-users"></i>
+                    Đơn đặt hàng khách hàng
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="/ordersuser/received" class="nav-link text-dark font-italic bg-light">
+                    <i class="fas fa-user-alt"></i>
+                    Đơn đặt hàng thành viên
+                </a>
+            </li>
+            <li class="nav-item">
+                <a asp-controller="storageimport" asp-action="index" class="nav-link text-dark font-italic bg-light">
+                    <i class="fas fa-file-import"></i>
+                    Quản lý nhập hàng
+                </a>
+            </li>
+            <li class="nav-item">
+                <a asp-controller="storageexport" asp-action="index" class="nav-link text-dark font-italic bg-light">
+                    <i class="fas fa-file-export"></i>
+                    Quản lý xuất hàng
+                </a>
+            </li>
+            <li class="nav-item">
+                <a asp-controller="employee" asp-action="index" class="nav-link text-dark font-italic bg-light">
+                    <i class="fas fa-user-tie"></i>
+                    Quản lý nhân viên
+                </a>
+            </li>
+            <li class="nav-item">
+                <a asp-controller="banner" asp-action="index" class="nav-link text-dark font-italic bg-light">
+                    <i class="fas fa-images"></i>
+                    Quản lý banner
+                </a>
+            </li>
+            <li class="nav-item">
+                <a asp-controller="promotion" asp-action="index" class="nav-link text-dark font-italic bg-light">
+                    <i class="fas fa-percent"></i>
+                    Quản lý mã giảm giá
+                </a>
+            </li>
+            <li class="nav-item">
+                <a asp-controller="comment" asp-action="index" class="nav-link text-dark font-italic bg-light">
+                    <i class="fas fa-comments"></i>
+                    Quản lý bình luận
+                </a>
+            </li>
+            <li class="nav-item">
+                <a asp-controller="sub_news" asp-action="index" class="nav-link text-dark font-italic bg-light">
+                    <i class="fas fa-newspaper"></i>
+                    Khách hàng nhận tin tức
+                </a>
+            </li>
+        </ul>
+
+        <p class="text-gray font-weight-bold text-uppercase px-3 small py-4 mb-0">Thống kê</p>
+
+        <ul class="nav flex-column bg-white mb-0">
+            <li class="nav-item">
+                <a asp-controller="statistical" asp-action="index" class="nav-link text-dark font-italic">
+                    <i class="fas fa-calculator"></i>
+                    Thống kê
+                </a>
+                <a asp-controller="home" asp-action="logout" class="nav-link text-dark font-italic">
+                    <h6>LOGOUT  <i class="fas fa-sign-out-alt"></i></h6>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <!-- End vertical navbar -->
+    <!-- Page content holder -->
+    <div class="page-content p-5" id="content">
+        <!-- Toggle button -->
+        <button id="sidebarCollapse" type="button" class="btn btn-light bg-white rounded-pill shadow-sm px-4 mb-4">
+            <i class="fa fa-bars mr-2"></i><small class="text-uppercase font-weight-bold"></small>
+        </button>
+        <!--  <div class="separator">
+        </div>
+        -->
+        <div class="row text-white">
+            <div class="col">
+                @RenderBody()
+            </div>
+        </div>
+
+    </div>
+    <!-- End demo content -->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

@@ -1,0 +1,60 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Top Product";
+    ViewData["Slug1"] = "THỐNG KÊ";
+    ViewData["Slug2"] = "Khách hàng nhiều mua nhiều nhất";
+}
+<div class="row">
+    <div class="col">
+        <div class="card">
+            <div class="card-header" style="color:black">
+                Top khách hàng nhiều mua nhiều nhất
+            </div>
+            <div class="card-body">
+                <canvas class="my-4 h-25" id="bar" style="width:700px;"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.2/chart.min.js" integrity="sha512-tMabqarPtykgDtdtSqCL3uLVM0gS1ZkUAVhRFu1vSEFgvB73niFQWJuvviDyBGBH22Lcau4rHB5p2K2T0Xvr6Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                url: "/Statistical/Top_customer",
+                data: {
+                    type: "ajax"
+                },
+                success: function (data) {
+                    var chart = document.getElementById('bar').getContext('2d');
+                    var mychart = new Chart(chart, {
+                        type: 'bar',
+                        data: {
+                            labels: data.name_user,
+                            datasets: [{
+                                label: 'Tổng chi',
+                                data: data.price,
+                                backgroundColor: 'rgb(91,189,43)'
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero: true
+                                    }
+                                }]
+                            }
+                        }
+
+                    })
+                },
+                error: function () {
+
+                }
+            });
+        });
+    </script>
+}

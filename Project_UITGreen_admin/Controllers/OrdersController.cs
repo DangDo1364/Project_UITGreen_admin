@@ -48,9 +48,9 @@ namespace Project_UITGreen_admin.Controllers
         }
         public IActionResult ConfirmOrd(int id)
         {
-            Orders.UpdateStatus(id,1);
+            Orders.UpdateStatus(id, 1);
             List<Order_items> list = Order_items.SelectByID(id);
-            foreach(var item in list)
+            foreach (var item in list)
             {
                 Storage_export.InsertExp(new Storage_export
                 {
@@ -58,8 +58,8 @@ namespace Project_UITGreen_admin.Controllers
                     quantity = item.quantity,
                     export_date = DateTime.Now,
                     reason = "Xuất kho giao hàng"
-                }) ;
-            }           
+                });
+            }
             return RedirectToAction("confirmed");
         }
         public IActionResult Delivery(int id)
@@ -149,42 +149,85 @@ namespace Project_UITGreen_admin.Controllers
 
             return View();
         }
-        public IActionResult ExportSaleOrd(int id=10)
+        public IActionResult ExportSaleOrd(int id)
         {
             Orders ord1 = Orders.SelectOrdByID(id);
             Customer cus = Customer.SelectByID(ord1.id_customer);
+            string discount = String.Format("{0:0,0 VNĐ}", ord1.price_sum - ord1.ship);
             var document = new Document
             {
-                PageInfo = new PageInfo {Margin = new MarginInfo(28,28,28,40)}
+                PageInfo = new PageInfo { Margin = new MarginInfo(28, 28, 28, 40) }
             };
-            var pdfpage = document.Pages.Add();
-
-            var textFragment = new TextFragment("Hóa đơn của khách hàng "+ cus.name_cus );
-            var textFragment1 = new TextFragment("Tổng giá trị hóa đơn " + String.Format("{0:0,0 VNĐ}", ord1.price_sum));
+            var textFragment5 = new TextFragment("HÓA ĐƠN" + "\n\n");
+            textFragment5.TextState.Font = FontRepository.FindFont("Arial");
+            textFragment5.TextState.FontSize = 24;
+            textFragment5.Position = new Position(240, 700);
+            var textFragment = new TextFragment("Hóa đơn của khách hàng: " + cus.name_cus + "\n");
+            var textFragment2 = new TextFragment("Địa chỉ: " + cus.address + "\n\n" + "Email: " + cus.email + "\n\n" + "SĐT: " + cus.phone + "\n\n" + "Giảm giá: " + discount + "\n");
+            textFragment2.TextState.Font = FontRepository.FindFont("Arial");
+            textFragment2.TextState.FontSize = 13;
+            textFragment.TextState.Font = FontRepository.FindFont("Arial");
+            textFragment.TextState.FontSize = 13;
+            var textFragment3 = new TextFragment("\n");
+            var textFragment4 = new TextFragment("Tiền ship: " + String.Format("{0:0,0 VNĐ}", ord1.ship) + "\n");
+            textFragment4.TextState.Font = FontRepository.FindFont("Arial");
+            textFragment4.TextState.FontSize = 13;
+            var textFragment1 = new TextFragment("Tổng giá trị hóa đơn: " + String.Format("{0:0,0 VNĐ}", ord1.price_sum));
+            textFragment1.TextState.Font = FontRepository.FindFont("Arial");
+            textFragment1.TextState.FontSize = 13;
             Table table = new Table
             {
                 ColumnWidths = "25% 25% 25% 25%",
                 DefaultCellPadding = new MarginInfo(10, 5, 10, 5),
                 Border = new BorderInfo(BorderSide.All, .5f, Color.Black),
-                DefaultCellBorder = new BorderInfo(BorderSide.All,.2f,Color.Black)
+                DefaultCellBorder = new BorderInfo(BorderSide.All, .2f, Color.Black),
+                DefaultCellTextState =
+                {
+                    Font =  FontRepository.FindFont("Arial"),
+
+                }
+
             };
             List<Order_items> ord = Order_items.SelectByID(id);
-            
-            DataTable dt = ConvertToDataTable(ord);
+            List<Data> list = new List<Data>();
+            foreach (var item in ord)
+            {
+                Product pro = Product.FindProByID(item.id_pro);
+                list.Add(new Data
+                {
+                    NameProduct = pro.name_pro,
+                    Quantity = item.quantity,
+                    Type = pro.type,
+                    Price = String.Format("{0:0,0 VNĐ}", item.price)
+                });
+            }
 
-            table.ImportDataTable(dt,true,0,0);
+            DataTable dt = ConvertToDataTable(list);
+
+            Page page = document.Pages.Add();
+            var imageFileName = System.IO.Path.Combine("wwwroot/image/logouitgreen.png");
+            page.AddImage(imageFileName, new Rectangle(20, 730, 120, 830));
+
+            table.ImportDataTable(dt, true, 0, 0);
+
+            document.Pages[1].AddImage(imageFileName, new Rectangle(20, 730, 120, 830));
+            document.Pages[1].Paragraphs.Add(textFragment5);
             document.Pages[1].Paragraphs.Add(textFragment);
+            document.Pages[1].Paragraphs.Add(textFragment2);
+            document.Pages[1].Paragraphs.Add(textFragment4);
             document.Pages[1].Paragraphs.Add(table);
+            document.Pages[1].Paragraphs.Add(textFragment3);
             document.Pages[1].Paragraphs.Add(textFragment1);
+
 
             using (var streamout = new MemoryStream())
             {
                 document.Save(streamout);
                 return new FileContentResult(streamout.ToArray(), "application/pdf")
                 {
-                    FileDownloadName=$"HoaDon{cus.name_cus}.pdf"
-                }; 
-            }    
+                    FileDownloadName = $"Hóa đơn {cus.name_cus}.pdf"
+                };
+            }
         }
     }
 }

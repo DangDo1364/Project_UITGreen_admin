@@ -1,0 +1,121 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Commet";
+    ViewData["Slug1"] = "QUẢN LÝ BÌNH LUẬN";
+    ViewData["Slug2"] = "Quản lý bình luận";
+
+    Pager pager = new Pager();
+    int pageNo = 0;
+    if (ViewBag.Pager != null)
+    {
+        pager = ViewBag.Pager;
+        pageNo = pager.currentPage;
+    }
+    List<Product> list = Product.SelectPro();
+}
+<style>
+    td {
+        text-align: center;
+    }
+</style>
+@model List<Comment>
+<div class="table-responsive" id="comment">
+    <table class="table" style="margin-top: 20px; background-color:white; ">
+        <tr>
+            <td colspan="4">
+                <form method="post" asp-controller="comment" asp-action="search">
+                    <div class="input-group">
+                        <select class="form-control" name="search" style="width:80%;">
+                            <option value="0">Vui lòng chọn</option>
+                            @foreach (var item in list)
+                            {
+                                if (item.id_pro == ViewBag.search)
+                                {
+                                    <option value="@item.id_pro" selected="selected">@item.name_pro</option>
+                                }
+                                else
+                                {
+                                    <option value="@item.id_pro">@item.name_pro</option>
+                                }
+                            }
+                        </select>
+                        <button type="submit" class="btn btn-primary" style="margin-left: 20px"><i class="fa fa-search"></i></button>
+                    </div>
+                </form>
+            </td>
+
+            <td>
+                <a asp-controller="category" asp-action="insert" class="btn btn-primary">Tạo mới</a>
+            </td>
+        </tr>
+        <tr>
+            <td>Tên người bình luận</td>
+            <td>Tên sản phẩm</td>
+            <td>Bình luận</td>
+            <td>Rating</td>
+            <td></td>
+        </tr>
+        @foreach (var item in Model)
+        {
+            Product pro = Product.FindProByID(item.id_pro);
+            <tr>
+                <td>@item.name</td>
+                <td>@pro.name_pro</td>
+                <td>@item.cmt_detail</td>
+                <td>@item.rate</td>
+                <td>
+                    <a class="delete btn btn-danger" data-id="@item.id_cmt">Xóa</a>
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+<nav aria-label="Page navigation example" style="float: right;">
+    <ul class="pagination justify-content-center">
+        @for (var pge = pager.startPage; pge <= pager.endPage; pge++)
+        {
+            <li class="page-item @(pge==pager.currentPage ? "active" : "")">
+                <a class="page-link" asp-controller="comment" asp-action="search" asp-route-pg="@pge" asp-route-search="@ViewBag.search">@pge</a>
+            </li>
+        }
+    </ul>
+</nav>
+
+@section scripts{
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script>
+                $(document).ready(function () {
+                    $(".delete").click(function () {
+                        $.ajax({
+                            url: "/Comment/Delete",
+                            data: {
+                                id: $(this).data("id"),
+                                type: "ajax"
+                            },
+                            success: function (data) {
+                                Swal.fire({
+                                    title: 'Bạn có muốn xóa?',
+                                    showDenyButton: true,
+                                    confirmButtonText: 'Xóa',
+                                    denyButtonText: `Không xóa`,
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        Swal.fire('Vâng bạn đã xóa!', '', 'success')
+                                        setTimeout(function () {
+                                            location.reload();
+                                        }, 1500);
+                                    } else if (result.isDenied) {
+                                        Swal.fire('Comment không được xóa', '', 'info')
+                                    }
+                                })
+                            },
+                            error: function () {
+
+                            }
+                        });
+                    });
+                });
+    </script>
+}

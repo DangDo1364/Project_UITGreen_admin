@@ -25,6 +25,25 @@ namespace Project_UITGreen_admin.Models
             }
             return listOrd;
         }
+        public static List<Orders_user> SelectOrdTop()
+        {
+            List<Orders_user> listOrd = new List<Orders_user>();
+            using (var context = new DataContext())
+            {
+                listOrd = context.Orders_user.Where(p => p.status > 0 && p.status < 4).ToList();
+            }
+            return listOrd;
+        }
+        public static List<Orders_user> SelectDate(DateTime date)
+        {
+            string date1 = date.ToString("dd-MM-yyyy");
+            List<Orders_user> listOrd = new List<Orders_user>();
+            using (var context = new DataContext())
+            {
+                listOrd = context.Orders_user.Where(p => p.date.ToString("dd-MM-yyyy").Contains(date1) && p.status > 0 && p.status < 4).ToList();
+            }
+            return listOrd;
+        }
         public static Orders_user SelectOrdByID(int id)
         {
             Orders_user ord = new Orders_user();

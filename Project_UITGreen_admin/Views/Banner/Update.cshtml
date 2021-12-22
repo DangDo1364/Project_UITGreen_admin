@@ -4,22 +4,22 @@
 @{
     ViewData["Title"] = "UpdateEmp";
     ViewData["Slug1"] = "QUẢN LÝ BANNER";
-    ViewData["Slug2"] = "Quản lý nhân viên";
+    ViewData["Slug2"] = "Quản lý banner";
 }
-@model Banner  
-<h3 style="text-align: center; margin-bottom: 10px; margin-top:20px;">Cập nhật thông tin nhân viên</h3>
+@model Banner
+<h3 style="text-align: center; margin-bottom: 10px; margin-top:20px;">Cập nhật banner</h3>
 <div class="container">
-    <form action="/Employee/UpdateEmp" method="post">
+    <form asp-controller="banner" asp-action="updatebanner" asp-route-id="@Model.id_banner" method="post">
         <div class="form-group">
             <label>Loại banner:</label>
-            <input type="text" class="form-control" name="id_banner" value="@Model.description" required>
+            <input type="text" class="form-control" name="description" value="@Model.description" required>
         </div>
         @{
             Image img = Image.SelectOne(Model.id_img);
         }
         <div class="form-group">
             <label>Link ảnh Banner:</label>
-            <textarea class="form-control" id="link" name="link" rows="3">@img.link</textarea>
+            <textarea class="form-control" name="link" rows="3">@img.link</textarea>
         </div>
         <button type="submit" class="btn btn-success" id="submit" value="Sửa">Submit</button>
         <a asp-action="Index" style="float:right;">Quay lại</a>

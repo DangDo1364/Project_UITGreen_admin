@@ -1,0 +1,61 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Storage_export";
+    ViewData["Slug1"] = "QUẢN LÝ XUẤT HÀNG";
+    ViewData["Slug2"] = "Quản lý xuất hàng";
+
+    Pager pager = new Pager();
+    int pageNo = 0;
+    if (ViewBag.Pager != null)
+    {
+        pager = ViewBag.Pager;
+        pageNo = pager.currentPage;
+    }
+}
+@model List<Storage_export>
+<style>
+    td {
+        text-align: center;
+    }
+</style>
+<table class="table table-bordered" style="margin-top: 20px; background-color: white; ">
+    <tr>
+        <td colspan="5">
+        </td>
+        <td>
+            <a asp-controller="storageexport" asp-action="insert" class="btn btn-primary">Tạo mới</a>
+        </td>
+    </tr>
+    <tr>
+        <td>Mã xuất hàng</td>
+        <td>Mã sản phẩm xuất</td>
+        <td>Tên sản phẩm</td>
+        <td>Ngày xuất hàng</td>
+        <td>Số lượng</td>
+        <td>Lý do xuất hàng</td>
+    </tr>
+    @foreach (var item in Model)
+    {
+        Product pro = Product.FindProByID(item.id_pro);
+        <tr>
+            <td>@item.id_exp</td>
+            <td>@item.id_pro</td>
+            <td>@pro.name_pro</td>
+            <td>@item.export_date</td>
+            <td>@item.quantity</td>
+            <td>@item.reason</td>
+        </tr>
+    }
+</table>
+<nav aria-label="Page navigation example" style="float: right;">
+    <ul class="pagination justify-content-center">
+        @for (var pge = pager.startPage; pge <= pager.endPage; pge++)
+        {
+            <li class="page-item @(pge==pager.currentPage ? "active" : "")">
+                <a class="page-link" asp-controller="storageimport" asp-route-pg="@pge"> @pge</a>
+            </li>
+        }
+    </ul>
+</nav>

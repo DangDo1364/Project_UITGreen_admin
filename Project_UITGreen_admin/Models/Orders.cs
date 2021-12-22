@@ -43,7 +43,17 @@ namespace Project_UITGreen_admin.Models
             }
             return ord;
         }
+        public static List<Orders> SelectDate(DateTime date)
+        {
+            string date1 = date.ToString("dd-MM-yyyy");
+            List<Orders> listOrd = new List<Orders>();
+            using (var context = new DataContext())
+            {
+                listOrd = context.Orders.Where(p => p.date.ToString("dd-MM-yyyy").Contains(date1) && p.status > 0 && p.status < 4).ToList();
+            }
+            return listOrd;
 
+        }
         public static void UpdateStatus(int id, int status)
         {
             using (var context = new DataContext())

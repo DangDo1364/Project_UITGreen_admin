@@ -15,7 +15,7 @@
 <div class="table-responsive" id="category">
     <table class="table" style="margin-top: 20px; background-color:white; ">
         <tr>
-            <td>Hình ảnh</td>
+            <td colspan="2">Hình ảnh</td>
             <td>Loại banner</td>
             <td></td>
         </tr>
@@ -23,10 +23,10 @@
         {
             Image img = Image.SelectOne(item.id_img);
             <tr>
-                <td><img src="@img.link" style="width:100px; height:100px" /></td>
+                <td colspan="2"><img src="@img.link" style="width:30%; height:30%" /></td>
                 <td>@item.description</td>
                 <td>
-                    <a class="btn btn-warning" asp-controller="banner" asp-action="update" asp-route-id="@item.id_banner">Cập nhật</a>
+                    <a class="btn btn-warning" asp-controller="banner" asp-action="update" asp-route-id="@item.id_banner">Xem</a>
                 </td>
             </tr>
         }

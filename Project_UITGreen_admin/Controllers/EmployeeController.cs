@@ -9,8 +9,7 @@ namespace Project_UITGreen_admin.Controllers
     {
         public IActionResult Index()
         {
-            List<Employee> listEmp = new List<Employee>();
-            listEmp = Employee.SelectEmp();
+            List<Employee> listEmp = Employee.SelectEmp();
             List<Image> listImg = new List<Image>();
             foreach (var item in listEmp)
             {
