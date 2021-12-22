@@ -153,7 +153,6 @@ namespace Project_UITGreen_admin.Controllers
         {
             Orders ord1 = Orders.SelectOrdByID(id);
             Customer cus = Customer.SelectByID(ord1.id_customer);
-            string discount = String.Format("{0:0,0 VNĐ}", ord1.price_sum - ord1.ship);
             var document = new Document
             {
                 PageInfo = new PageInfo { Margin = new MarginInfo(28, 28, 28, 40) }
@@ -163,7 +162,7 @@ namespace Project_UITGreen_admin.Controllers
             textFragment5.TextState.FontSize = 24;
             textFragment5.Position = new Position(240, 700);
             var textFragment = new TextFragment("Hóa đơn của khách hàng: " + cus.name_cus + "\n");
-            var textFragment2 = new TextFragment("Địa chỉ: " + cus.address + "\n\n" + "Email: " + cus.email + "\n\n" + "SĐT: " + cus.phone + "\n\n" + "Giảm giá: " + discount + "\n");
+            var textFragment2 = new TextFragment("Địa chỉ: " + cus.address + "\n\n" + "Email: " + cus.email + "\n\n" + "SĐT: " + cus.phone + "\n");
             textFragment2.TextState.Font = FontRepository.FindFont("Arial");
             textFragment2.TextState.FontSize = 13;
             textFragment.TextState.Font = FontRepository.FindFont("Arial");

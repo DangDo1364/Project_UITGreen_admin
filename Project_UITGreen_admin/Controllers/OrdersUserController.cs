@@ -158,7 +158,6 @@ namespace Project_UITGreen_admin.Controllers
             Orders_user ord1 = Orders_user.SelectOrdByID(id);
             Users u = Users.FindU(ord1.id_user);
             Order_status sta = Order_status.SelectOrdByID(ord1.id_ord);
-            string discount = String.Format("{0:0,0 VNĐ}", ord1.price_sum - ord1.ship);
             var document = new Document
             {
                 PageInfo = new PageInfo { Margin = new MarginInfo(28, 28, 28, 40) }
@@ -168,7 +167,7 @@ namespace Project_UITGreen_admin.Controllers
             textFragment5.TextState.FontSize = 24;
             textFragment5.Position = new Position(240, 700);
             var textFragment = new TextFragment("Hóa đơn của khách hàng: " + u.fullname + "\n");
-            var textFragment2 = new TextFragment("Địa chỉ: " + sta.address + "\n\n" + "Email: " + u.email + "\n\n" + "SĐT: " + u.phone + "\n\n" + "Giảm giá: " + discount + "\n");
+            var textFragment2 = new TextFragment("Địa chỉ: " + sta.address + "\n\n" + "Email: " + u.email + "\n\n" + "SĐT: " + u.phone + "\n");
             textFragment2.TextState.Font = FontRepository.FindFont("Arial");
             textFragment2.TextState.FontSize = 13;
             textFragment.TextState.Font = FontRepository.FindFont("Arial");
@@ -210,7 +209,7 @@ namespace Project_UITGreen_admin.Controllers
             DataTable dt = ConvertToDataTable(list);
 
             Page page = document.Pages.Add();
-            var imageFileName = System.IO.Path.Combine("wwwroot/image/do.jpg");
+            var imageFileName = System.IO.Path.Combine("wwwroot/image/logouitgreen.png");
             page.AddImage(imageFileName, new Rectangle(20, 730, 120, 830));
 
             table.ImportDataTable(dt, true, 0, 0);
