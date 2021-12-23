@@ -200,7 +200,6 @@ namespace Project_UITGreen_admin.Controllers
                     Price = String.Format("{0:0,0 VNĐ}", item.price)
                 });
             }
-
             DataTable dt = ConvertToDataTable(list);
 
             Page page = document.Pages.Add();

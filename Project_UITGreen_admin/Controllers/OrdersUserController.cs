@@ -192,7 +192,7 @@ namespace Project_UITGreen_admin.Controllers
                 }
 
             };
-            List<Order_items> ord = Order_items.SelectByID(id);
+            List<Order_user_items> ord = Order_user_items.SelectByID(id);
             List<Data> list = new List<Data>();
             foreach (var item in ord)
             {

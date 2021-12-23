@@ -54,7 +54,7 @@
         @for (var pge = pager.startPage; pge <= pager.endPage; pge++)
         {
             <li class="page-item @(pge==pager.currentPage ? "active" : "")">
-                <a class="page-link" asp-controller="storageimport" asp-route-pg="@pge"> @pge</a>
+                <a class="page-link" asp-controller="storageexport" asp-route-pg="@pge"> @pge</a>
             </li>
         }
     </ul>
