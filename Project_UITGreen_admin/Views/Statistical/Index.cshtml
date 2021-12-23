@@ -7,13 +7,15 @@
     ViewData["Slug2"] = "Thống kê";
 }
 
+<h3>BÁO CÁO ĐƠN HÀNG THEO NGÀY </h3> <br>
+<p>Chọn ngày xuất báo cáo: </p> <br>
 <form asp-controller="statistical" asp-action="export" method="post">
     <div class="input-group" style="margin-bottom:50px;">
-        <label>Chọn ngày xuất hóa đơn:</label>
         <input type="date" name="date"
                value="">
         <button type="submit" class="statistical btn btn-success" id="submit" value="Thêm">Submit</button>
     </div>
 </form>
-<a class="btn btn-success" asp-controller="statistical" asp-action="product_quantity">Sản phẩm có số lượng mua nhiều nhất</a>
+<h3>THỐNG KÊ </h3> <br>
+<a class="btn btn-success" asp-controller="statistical" asp-action="product_quantity">Sản phẩm có số lượng mua nhiều nhất</a> <br> <br>
 <a class="btn btn-success" asp-controller="statistical" asp-action="top_customer">Khách hàng thành viên mua nhiều nhất</a>
