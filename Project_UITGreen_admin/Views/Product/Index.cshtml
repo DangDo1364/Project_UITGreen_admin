@@ -51,7 +51,7 @@
                 <td><strong>Đơn vị</strong></td>
                 <td><strong>Giảm giá</strong></td>
                 <td><strong>Chênh lệch</strong></td>
-                <td></td>
+                <td colspan="2"></td>
             </tr>
             @foreach (var item in Model)
             {
@@ -64,7 +64,7 @@
                     <td>@item.type</td>
                     <td>@item.discount</td>
                     <td>@item.sale_rate</td>
-                    <td>
+                    <td colspan="2">
                         <a class="btn btn-warning" asp-controller="product" asp-action="update" asp-route-id="@item.id_pro">Cập nhật</a>
                     </td>
                 </tr>

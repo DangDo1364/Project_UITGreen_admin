@@ -14,7 +14,7 @@
         listImg = ViewBag.listImg;
     }
 }
-}
+
 @model List<Employee>
 
 <style>
@@ -25,9 +25,9 @@
 <div class="table-responsive" id="employee">
     <table class="table" style="margin-top: 20px; background-color: white;">
         <tr>
-            <td colspan="7">
+            <td colspan="6">
             </td>
-            <td>
+            <td colspan="2">
                 <a asp-controller="employee" asp-action="insert" class="btn btn-primary">Tạo mới</a>
             </td>
         </tr>
