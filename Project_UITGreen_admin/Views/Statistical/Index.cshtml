@@ -19,3 +19,12 @@
 <h3>THỐNG KÊ </h3> <br>
 <a class="btn btn-success" asp-controller="statistical" asp-action="product_quantity">Sản phẩm có số lượng mua nhiều nhất</a> <br> <br>
 <a class="btn btn-success" asp-controller="statistical" asp-action="top_customer">Khách hàng thành viên mua nhiều nhất</a>
+
+@{Html.BeginForm("CreateDocument", "Orders", FormMethod.Get);
+    {
+        <div>
+            <input type="submit" value="Tạo hóa đơn" style="width:150px;height:27px" />
+        </div>
+    }
+    Html.EndForm();
+}
