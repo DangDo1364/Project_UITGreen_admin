@@ -231,10 +231,21 @@ namespace Project_UITGreen_admin.Controllers
             }
         }
         */
-        public IActionResult CreateDocument()
+        public IActionResult CreateDocument(int id)
         {
             using (ExcelEngine excelEngine = new ExcelEngine())
             {
+                Orders ord1 = Orders.SelectOrdByID(id);
+                Customer cus = Customer.SelectByID(ord1.id_customer);
+                List<Order_items> listord = Order_items.SelectByID(id);
+                Promotion pro = Promotion.selectbyid(ord1.id_promotion);
+                string add = cus.address;
+                string[] arr = add.Split(',');
+                string add1 = arr[0];
+                string add2 = arr[1];
+                string district = arr[2];
+                string city = arr[3];
+
                 IApplication application = excelEngine.Excel;
 
                 application.DefaultVersion = ExcelVersion.Xlsx;
@@ -275,12 +286,21 @@ namespace Project_UITGreen_admin.Controllers
                 //Thông tin đơn hàng
                 worksheet.Range["D5"].Text = "MÃ ĐƠN HÀNG";
                 worksheet.Range["E5"].Text = "NGÀY LẬP";
-                worksheet.Range["D6"].Number = 1; 
-                worksheet.Range["E6"].Value = "1/1/2022";
+                worksheet.Range["D6"].Number = ord1.id_ord; 
+                worksheet.Range["E6"].Value = ord1.date.ToString("dd/MM/yyyy");
                 worksheet.Range["D7"].Text = "MÃ KHÁCH HÀNG";
                 worksheet.Range["E7"].Text = "THANH TOÁN";
-                worksheet.Range["D8"].Number = 2;
-                worksheet.Range["E8"].Text = "Tiền mặt";
+                worksheet.Range["D8"].Number = cus.id_cus;
+                string paymethod = "";
+                if (ord1.paymethod == 1)
+                {
+                    paymethod = "Tiền mặt";
+                }
+                else
+                {
+                    paymethod = "Thanh toán online"; 
+                }    
+                worksheet.Range["E8"].Text = paymethod;
 
                 //Format
                 worksheet.Range["D5:E5"].CellStyle.Color = Color.FromArgb(0, 137, 71);
@@ -304,16 +324,17 @@ namespace Project_UITGreen_admin.Controllers
                 worksheet.Range["A7"].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignLeft;
                 worksheet.Range["A7"].CellStyle.VerticalAlignment = ExcelVAlign.VAlignCenter;
 
-                worksheet.Range["A8"].Text = "Phan Tấn Đạt";
-                worksheet.Range["A9"].Text = "Tường Lộc";
-                worksheet.Range["A10"].Text = "Tam Bình";
-                worksheet.Range["A11"].Text = "Vĩnh Long";
-                worksheet.Range["A12"].Text = "0123456789";
+                worksheet.Range["A8"].Text = cus.name_cus;
+                worksheet.Range["A9"].Text = add1;
+                worksheet.Range["A10"].Text = add2;
+                worksheet.Range["A11"].Text = district;
+                worksheet.Range["A12"].Text = city;
+                worksheet.Range["A13"].Text = cus.phone;
 
                 //Email
-                IHyperLink hyperlink = worksheet.HyperLinks.Add(worksheet.Range["A13"]);
+                IHyperLink hyperlink = worksheet.HyperLinks.Add(worksheet.Range["A14"]);
                 hyperlink.Type = ExcelHyperLinkType.Url;
-                hyperlink.Address = "phantandat97@gmail.com";
+                hyperlink.Address = cus.email;
                 hyperlink.ScreenTip = "Gửi mail";
 
                 worksheet.Range["A15:B15"].Merge();
@@ -330,7 +351,8 @@ namespace Project_UITGreen_admin.Controllers
                 worksheet.Range["C15"].Text = "SL";
                 worksheet.Range["D15"].Text = "ĐƠN GIÁ";
                 worksheet.Range["E15"].Text = "TỔNG";
-                worksheet.Range["A16"].Text = "Sản phẩm 1";
+
+                /*worksheet.Range["A16"].Text = "Sản phẩm 1";
                 worksheet.Range["A17"].Text = "Sản phẩm 2";
                 worksheet.Range["A18"].Text = "Sản phẩm 3";
                 worksheet.Range["A19"].Text = "Sản phẩm 4";
@@ -345,16 +367,32 @@ namespace Project_UITGreen_admin.Controllers
                 worksheet.Range["D18"].Number = 10;
                 worksheet.Range["D19"].Number = 20;
                 worksheet.Range["D20"].Number = 30;
-                worksheet.Range["D23"].Text = "Tổng thanh toán";
+                worksheet.Range["D23"].Text = "Tổng thanh toán";*/
 
-                //Format đơn vị tiền
-                worksheet.Range["D16:E22"].NumberFormat = "0.00vnd";
-                worksheet.Range["E23"].NumberFormat = "0.00vnd";
+                int row = 16;
+                foreach (var item in listord)
+                {
+                    Product product = Product.FindProByID(item.id_pro);
+                    worksheet.Range["A" + row].Text = product.name_pro;
+                    worksheet.Range["C" + row].Number = item.quantity;
+                    worksheet.Range["D" + row].Text = String.Format("{0:0,0}", item.price);
+                    worksheet.Range["E" + row].Text = String.Format("{0:0,0}", item.price * item.quantity);
+                    row++;
+                }
+                row = row + 1;
+                worksheet.Range["D" + row].Text = "Tiền ship";
+                worksheet.Range["E" + row].Text = String.Format("{0:0,0 VNĐ}", ord1.ship);
+                row = row + 1;
+                worksheet.Range["D" + row].Text = "Giảm giá";
+                worksheet.Range["E" + row].Text = String.Format("{0:0,0 VNĐ}", pro.discount);
+                row = row + 1;
+                worksheet.Range["D" + row].Text = "Tổng thanh toán";
+                worksheet.Range["E" + row].Text = String.Format("{0:0,0 VNĐ}", ord1.price_sum); 
 
                 //M đổ tổng tiền từ csdl vào hay dùng excel để tính, cái này là dùng công thức excel để tính
-                application.EnableIncrementalFormula = true;
+                /*application.EnableIncrementalFormula = true;
                 worksheet.Range["E16:E20"].Formula = "=C16*D16";
-                worksheet.Range["E23"].Formula = "=SUM(E16:E22)";
+                worksheet.Range["E23"].Formula = "=SUM(E16:E22)";*/
 
                 //Format borders
                 worksheet.Range["A16:E22"].CellStyle.Borders[ExcelBordersIndex.EdgeTop].LineStyle = ExcelLineStyle.Thin;
@@ -371,7 +409,7 @@ namespace Project_UITGreen_admin.Controllers
                 worksheet.Range["A3:E23"].CellStyle.Font.Size = 10;
                 worksheet.Range["A15:E15"].CellStyle.Font.Color = ExcelKnownColors.White;
                 worksheet.Range["A15:E15"].CellStyle.Font.Bold = true;
-                worksheet.Range["D23:E23"].CellStyle.Font.Bold = true;
+                worksheet.Range["D"+row+":E"+row].CellStyle.Font.Bold = true;
 
                 worksheet.Range["A15:E15"].CellStyle.Color = Color.FromArgb(0, 137, 71);
 
@@ -405,7 +443,7 @@ namespace Project_UITGreen_admin.Controllers
                 //Download the Excel file in the browser
                 FileStreamResult fileStreamResult = new FileStreamResult(stream, "application/excel");
 
-                fileStreamResult.FileDownloadName = "HoaDon.xlsx";
+                fileStreamResult.FileDownloadName = "Hóa đơn "+cus.name_cus+".xlsx";
 
                 return fileStreamResult;
             }

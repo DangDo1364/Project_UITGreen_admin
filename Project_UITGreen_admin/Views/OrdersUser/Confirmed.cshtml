@@ -42,7 +42,7 @@
             <td>@item.id_user</td>
             <td>@String.Format("{0:0,0}", item.price_sum)</td>
             <td><a class="btn btn-primary" asp-controller="ordersuser" asp-action="deliveryuser" asp-route-id="@item.id_ord">Vận chuyển</a></td>
-            <td><a class="btn btn-secondary" asp-controller="ordersuser" asp-action="ExportSaleOrd" asp-route-id="@item.id_ord">Hóa đơn</a></td>
+            <td><a class="btn btn-secondary" asp-controller="ordersuser" asp-action="createdocument" asp-route-id="@item.id_ord">Hóa đơn</a></td>
             <td><a class="btn btn-success" asp-controller="ordersuser" asp-action="detail_ord" asp-route-id="@item.id_ord">Chi tiết</a></td>
         </tr>
     }
