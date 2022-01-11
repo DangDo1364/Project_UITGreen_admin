@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using OfficeOpenXml;
+using OfficeOpenXml.Drawing;
+using OfficeOpenXml.Style;
 using Project_UITGreen_admin.Models;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -116,16 +119,65 @@ namespace Project_UITGreen_admin.Controllers
             using (var package = new ExcelPackage(stream))
             {
                 var sheet = package.Workbook.Worksheets.Add("HoaDon");
-                // add sheet 
-                sheet.Cells[1, 1].Value = "Mã hóa đơn";
-                sheet.Cells[1, 2].Value = "Tên khách hàng";
-                sheet.Cells[1, 3].Value = "Tên mã giảm giá";
-                sheet.Cells[1, 4].Value = "Tiền ship";
-                sheet.Cells[1, 5].Value = "Kiểu thanh toán";
-                sheet.Cells[1, 6].Value = "Ngày đặt";
-                sheet.Cells[1, 7].Value = "Tổng hóa đơn";
+                System.Drawing.Image img = System.Drawing.Image.FromFile(@"wwwroot\image\logohoadon.png");
+                ExcelPicture pic = sheet.Drawings.AddPicture("logo", img);
+                pic.SetPosition(0, 0);
+                // Format cho đẹp
+                sheet.DefaultColWidth = 17;
+                sheet.DefaultRowHeight = 34;
+                sheet.Cells.Style.WrapText = true;
 
-                int row = 2;
+                sheet.Row(1).Height = 62;
+                using (var range = sheet.Cells["A1:C1"])
+                {
+                    range.Merge=true;
+                }
+
+                using (var range = sheet.Cells["D1:G1"])
+                {
+                    range.Value = $"BÁO CÁO ĐƠN HÀNG NGÀY {date.ToString("dd-MM-yyyy")}";
+                    range.Merge = true;
+                    range.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                    range.Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                    range.Style.Font.SetFromFont(new Font("Times New Roman", 18));
+                    range.Style.Font.Bold = true;
+                    range.Style.Font.Color.SetColor(Color.Green);
+                }
+
+                using (var range = sheet.Cells["A2:G2"])
+                {
+                    range.Style.Fill.PatternType = ExcelFillStyle.Solid;
+                    range.Style.Fill.BackgroundColor.SetColor(Color.Green);
+
+                    range.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                    range.Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+
+                    range.Style.Font.SetFromFont(new Font("Times New Roman", 12));
+                    range.Style.Font.Bold = true;
+                    range.Style.Font.Color.SetColor(Color.White);
+
+                    range.Style.Border.Bottom.Style = ExcelBorderStyle.Thick;
+                    range.Style.Border.Bottom.Color.SetColor(Color.DarkGreen);
+                }
+
+                using (var range = sheet.Cells["A3:G100"])
+                {
+                    range.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                    range.Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                    range.Style.WrapText = true;
+                    range.Style.Font.SetFromFont(new Font("Times New Roman", 12));
+                }
+
+                // add sheet 
+                sheet.Cells[2, 1].Value = "Mã hóa đơn";
+                sheet.Cells[2, 2].Value = "Tên khách hàng";
+                sheet.Cells[2, 3].Value = "Tên mã giảm giá";
+                sheet.Cells[2, 4].Value = "Tiền ship";
+                sheet.Cells[2, 5].Value = "Kiểu thanh toán";
+                sheet.Cells[2, 6].Value = "Ngày đặt";
+                sheet.Cells[2, 7].Value = "Tổng hóa đơn";
+
+                int row = 3;
                 foreach (var item in list)
                 {
                     string type = "";
