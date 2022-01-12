@@ -84,33 +84,33 @@
     <script>
                 $(document).ready(function () {
                     $(".delete").click(function () {
-                        $.ajax({
-                            url: "/Comment/Delete",
-                            data: {
-                                id: $(this).data("id"),
-                                type: "ajax"
-                            },
-                            success: function (data) {
-                                Swal.fire({
-                                    title: 'Bạn có muốn xóa?',
-                                    showDenyButton: true,
-                                    confirmButtonText: 'Xóa',
-                                    denyButtonText: `Không xóa`,
-                                }).then((result) => {
-                                    if (result.isConfirmed) {
-                                        Swal.fire('Vâng bạn đã xóa!', '', 'success')
-                                        setTimeout(function () {
-                                            location.reload();
-                                        }, 1500);
-                                    } else if (result.isDenied) {
-                                        Swal.fire('Comment không được xóa', '', 'info')
-                                    }
-                                })
-                            },
-                            error: function () {
+                        Swal.fire({
+                            title: 'Bạn có muốn xóa?',
+                            showDenyButton: true,
+                            confirmButtonText: 'Xóa',
+                            denyButtonText: `Không xóa`,
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                Swal.fire('Vâng bạn đã xóa!', '', 'success')
+                                $(this).parent().parent().remove();
+                                $.ajax({
+                                    url: "/Comment/Delete",
+                                    data: {
+                                        id: $(this).data("id"),
+                                        type: "ajax"
+                                    },
+                                    success: function (data) {
 
+                                    },
+                                    error: function () {
+
+                                    }
+                                });
+                            } else if (result.isDenied) {
+                                Swal.fire('Comment không được xóa', '', 'info')
                             }
-                        });
+                        })
+                       
                     });
                 });
     </script>
