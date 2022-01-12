@@ -178,6 +178,7 @@ namespace Project_UITGreen_admin.Controllers
                 sheet.Cells[2, 7].Value = "Tổng hóa đơn";
 
                 int row = 3;
+                double price_sum = 0;
                 foreach (var item in list)
                 {
                     string type = "";
@@ -194,11 +195,12 @@ namespace Project_UITGreen_admin.Controllers
                     sheet.Cells[row, 1].Value = item.id_ord;
                     sheet.Cells[row, 2].Value = cus.name_cus;
                     sheet.Cells[row, 3].Value = pro.name_promotion;
-                    sheet.Cells[row, 4].Value = item.ship;
+                    sheet.Cells[row, 4].Value = String.Format("{0:0,0 VNĐ}", item.ship);
                     sheet.Cells[row, 5].Value = type;
-                    sheet.Cells[row, 6].Value = item.date.ToString();
+                    sheet.Cells[row, 6].Value = item.date.ToString("dd/MM/yyyy HH:mm:ss");
                     sheet.Cells[row, 7].Value = String.Format("{0:0,0 VNĐ}", item.price_sum);
                     row++;
+                    price_sum += item.price_sum;
                 }
                 foreach (var item in list1)
                 {
@@ -216,12 +218,17 @@ namespace Project_UITGreen_admin.Controllers
                     sheet.Cells[row, 1].Value = item.id_ord;
                     sheet.Cells[row, 2].Value = u.fullname;
                     sheet.Cells[row, 3].Value = pro.name_promotion;
-                    sheet.Cells[row, 4].Value = item.ship;
+                    sheet.Cells[row, 4].Value = String.Format("{0:0,0 VNĐ}", item.ship);
                     sheet.Cells[row, 5].Value = type;
-                    sheet.Cells[row, 6].Value = item.date.ToString();
+                    sheet.Cells[row, 6].Value = item.date.ToString("dd/MM/yyyy HH:mm:ss");
                     sheet.Cells[row, 7].Value = String.Format("{0:0,0 VNĐ}", item.price_sum);
                     row++;
+                    price_sum += item.price_sum;
                 }
+                sheet.Cells[row,6].Style.Font.Bold = true;
+                sheet.Cells[row,7].Style.Font.Bold = true;
+                sheet.Cells[row, 6].Value = "Tổng tiền";
+                sheet.Cells[row, 7].Value = String.Format("{0:0,0 VNĐ}", price_sum);
                 package.Save();
             }
             stream.Position = 0;
