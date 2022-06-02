@@ -4,3 +4,4 @@
 ## Công nghệ sử dụng: 
 ### Frontend: html,css thuần,javascript 
 ### Backend: C#, framework ASP.net core
+### Điểm : 10/10
